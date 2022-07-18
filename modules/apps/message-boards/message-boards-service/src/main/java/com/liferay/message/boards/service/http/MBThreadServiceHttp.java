@@ -977,6 +977,45 @@ public class MBThreadServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBThread>
+		getMessageBoardSectionMessageBoardThreadsPage(
+			HttpPrincipal httpPrincipal, long groupId, long categoryId,
+			com.liferay.portal.kernel.search.Sort[] sorts,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.message.boards.model.MBThread> queryDefinition) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBThreadServiceUtil.class,
+				"getMessageBoardSectionMessageBoardThreadsPage",
+				_getMessageBoardSectionMessageBoardThreadsPageParameterTypes27);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, categoryId, sorts, filter, queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.message.boards.model.MBThread>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(MBThreadServiceHttp.class);
 
 	private static final Class<?>[] _deleteThreadParameterTypes0 = new Class[] {
@@ -1058,5 +1097,13 @@ public class MBThreadServiceHttp {
 	};
 	private static final Class<?>[] _unlockThreadParameterTypes23 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_getMessageBoardSectionMessageBoardThreadsPageParameterTypes27 =
+			new Class[] {
+				long.class, long.class,
+				com.liferay.portal.kernel.search.Sort[].class,
+				com.liferay.portal.kernel.search.filter.Filter.class,
+				com.liferay.portal.kernel.dao.orm.QueryDefinition.class
+			};
 
 }
