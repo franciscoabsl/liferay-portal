@@ -498,6 +498,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return mbThreadPersistence.countByG_C_S(groupId, categoryId, status);
 	}
 
+
+
 	@Override
 	public boolean hasAnswerMessage(long threadId) {
 		int count = _mbMessagePersistence.countByT_A(threadId, true);
