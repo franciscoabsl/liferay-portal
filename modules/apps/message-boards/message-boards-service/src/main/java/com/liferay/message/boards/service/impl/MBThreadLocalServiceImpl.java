@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -1181,6 +1182,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			moveChildrenMessages(message, category, oldThreadId);
 		}
+	}
+
+	public List<MBThread> getMessageBoardSectionMessageBoardThreadsPage(
+		long groupId, long categoryId, Sort[] sorts, Filter filter, QueryDefinition<MBThread> queryDefinition) {
+		return mbThreadFinder.findMessageBoardSectionMessageBoardThreadsPage(groupId, categoryId, sorts, filter, queryDefinition);
 	}
 
 	@Reference
