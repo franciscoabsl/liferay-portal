@@ -374,7 +374,7 @@ public interface MBThreadLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getMessageBoardSectionMessageBoardThreadsPage(
-		long groupId, long categoryId, Sort[] sorts, Filter filter,
+		long groupId, long categoryId, Sort[] sorts, Filter filter, String tag,
 		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -403,6 +403,11 @@ public interface MBThreadLocalService
 	public List<MBThread> getPriorityThreads(
 			long categoryId, double priority, boolean inherit)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSectionThreadsCount(
+		long groupId, long categoryId, Sort[] sorts, Filter filter, String tag,
+		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBThread getThread(long threadId) throws PortalException;

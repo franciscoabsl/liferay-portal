@@ -114,7 +114,7 @@ public interface MBThreadService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getMessageBoardSectionMessageBoardThreadsPage(
-		long groupId, long categoryId, Sort[] sorts, Filter filter,
+		long groupId, long categoryId, Sort[] sorts, Filter filter, String tag,
 		QueryDefinition<MBThread> queryDefinition);
 
 	/**
@@ -123,6 +123,11 @@ public interface MBThreadService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSectionThreadsCount(
+		long groupId, long categoryId, Sort[] sorts, Filter filter, String tag,
+		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getThreads(

@@ -981,7 +981,7 @@ public class MBThreadServiceHttp {
 		getMessageBoardSectionMessageBoardThreadsPage(
 			HttpPrincipal httpPrincipal, long groupId, long categoryId,
 			com.liferay.portal.kernel.search.Sort[] sorts,
-			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.filter.Filter filter, String tag,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.message.boards.model.MBThread> queryDefinition) {
 
@@ -992,7 +992,8 @@ public class MBThreadServiceHttp {
 				_getMessageBoardSectionMessageBoardThreadsPageParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, categoryId, sorts, filter, queryDefinition);
+				methodKey, groupId, categoryId, sorts, filter, tag,
+				queryDefinition);
 
 			Object returnObj = null;
 
@@ -1006,6 +1007,43 @@ public class MBThreadServiceHttp {
 
 			return (java.util.List<com.liferay.message.boards.model.MBThread>)
 				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getSectionThreadsCount(
+		HttpPrincipal httpPrincipal, long groupId, long categoryId,
+		com.liferay.portal.kernel.search.Sort[] sorts,
+		com.liferay.portal.kernel.search.filter.Filter filter, String tag,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition
+			<com.liferay.message.boards.model.MBThread> queryDefinition) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBThreadServiceUtil.class, "getSectionThreadsCount",
+				_getSectionThreadsCountParameterTypes28);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, categoryId, sorts, filter, tag,
+				queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -1103,7 +1141,15 @@ public class MBThreadServiceHttp {
 				long.class, long.class,
 				com.liferay.portal.kernel.search.Sort[].class,
 				com.liferay.portal.kernel.search.filter.Filter.class,
+				String.class,
 				com.liferay.portal.kernel.dao.orm.QueryDefinition.class
 			};
+	private static final Class<?>[] _getSectionThreadsCountParameterTypes28 =
+		new Class[] {
+			long.class, long.class,
+			com.liferay.portal.kernel.search.Sort[].class,
+			com.liferay.portal.kernel.search.filter.Filter.class, String.class,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
+		};
 
 }

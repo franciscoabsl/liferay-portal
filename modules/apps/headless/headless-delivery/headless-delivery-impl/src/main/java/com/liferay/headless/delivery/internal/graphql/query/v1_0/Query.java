@@ -2420,6 +2420,41 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardSectionCustomFinder(aggregation: ___, filter: ___, messageBoardSectionId: ___, page: ___, pageSize: ___, search: ___, sorts: ___, tag: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the message board section's threads. Results can be paginated, filtered, searched, and sorted."
+	)
+	public MessageBoardThreadPage messageBoardSectionCustomFinder(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("tag") String tag,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource -> new MessageBoardThreadPage(
+				messageBoardThreadResource.
+					getMessageBoardSectionCustomFinderPage(
+						messageBoardSectionId, search, tag,
+						_aggregationBiFunction.apply(
+							messageBoardThreadResource, aggregations),
+						_filterBiFunction.apply(
+							messageBoardThreadResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							messageBoardThreadResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadsRanked(dateCreated: ___, dateModified: ___, messageBoardSectionId: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -4748,6 +4783,48 @@ public class Query {
 		}
 
 		private Document _document;
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardSection.class)
+	public class GetMessageBoardSectionCustomFinderPageTypeExtension {
+
+		public GetMessageBoardSectionCustomFinderPageTypeExtension(
+			MessageBoardSection messageBoardSection) {
+
+			_messageBoardSection = messageBoardSection;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the message board section's threads. Results can be paginated, filtered, searched, and sorted."
+		)
+		public MessageBoardThreadPage customFinder(
+				@GraphQLName("search") String search,
+				@GraphQLName("tag") String tag,
+				@GraphQLName("aggregation") List<String> aggregations,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardThreadResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardThreadResource -> new MessageBoardThreadPage(
+					messageBoardThreadResource.
+						getMessageBoardSectionCustomFinderPage(
+							_messageBoardSection.getId(), search, tag,
+							_aggregationBiFunction.apply(
+								messageBoardThreadResource, aggregations),
+							_filterBiFunction.apply(
+								messageBoardThreadResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardThreadResource, sortsString))));
+		}
+
+		private MessageBoardSection _messageBoardSection;
 
 	}
 

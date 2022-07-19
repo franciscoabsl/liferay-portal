@@ -126,12 +126,12 @@ public class MBThreadServiceUtil {
 	public static List<MBThread> getMessageBoardSectionMessageBoardThreadsPage(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.search.Sort[] sorts,
-		com.liferay.portal.kernel.search.filter.Filter filter,
+		com.liferay.portal.kernel.search.filter.Filter filter, String tag,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<MBThread>
 			queryDefinition) {
 
 		return getService().getMessageBoardSectionMessageBoardThreadsPage(
-			groupId, categoryId, sorts, filter, queryDefinition);
+			groupId, categoryId, sorts, filter, tag, queryDefinition);
 	}
 
 	/**
@@ -141,6 +141,17 @@ public class MBThreadServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static int getSectionThreadsCount(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.search.Sort[] sorts,
+		com.liferay.portal.kernel.search.filter.Filter filter, String tag,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<MBThread>
+			queryDefinition) {
+
+		return getService().getSectionThreadsCount(
+			groupId, categoryId, sorts, filter, tag, queryDefinition);
 	}
 
 	public static List<MBThread> getThreads(

@@ -153,8 +153,15 @@ public interface MBThreadFinder {
 		findMessageBoardSectionMessageBoardThreadsPage(
 			long groupId, long categoryId,
 			com.liferay.portal.kernel.search.Sort[] sorts,
-			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.filter.Filter filter, String tag,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.message.boards.model.MBThread> queryDefinition);
+
+	public int countMessageBoardSectionMessageBoardThreadsPage(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.search.Sort[] sorts,
+		com.liferay.portal.kernel.search.filter.Filter filter, String tag,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition
+			<com.liferay.message.boards.model.MBThread> queryDefinition);
 
 }
