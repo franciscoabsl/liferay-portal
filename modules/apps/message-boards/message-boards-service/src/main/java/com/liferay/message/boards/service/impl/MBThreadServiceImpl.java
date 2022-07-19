@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -568,6 +570,17 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		return mbThreadFinder.countByG_U_A(
 			groupId, userId, false, queryDefinition);
+	}
+
+	@Override
+	public List<MBThread> getMessageBoardSectionMessageBoardThreadsPage(
+		long groupId, long categoryId, Sort[] sorts, Filter filter, String tag, QueryDefinition<MBThread> queryDefinition) {
+		return mbThreadLocalService.getMessageBoardSectionMessageBoardThreadsPage(groupId, categoryId, sorts, filter, tag, queryDefinition);
+	}
+
+	@Override
+	public int getSectionThreadsCount(long groupId, long categoryId, Sort[] sorts, Filter filter, String tag, QueryDefinition<MBThread> queryDefinition) {
+		return mbThreadLocalService.getSectionThreadsCount(groupId, categoryId, sorts, filter, tag, queryDefinition);
 	}
 
 	@Reference(

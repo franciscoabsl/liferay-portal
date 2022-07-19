@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -439,6 +440,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getSectionThreadsCount(long groupId, long categoryId, Sort[] sorts, Filter filter, String tag, QueryDefinition<MBThread> queryDefinition) {
+		return mbThreadFinder.countMessageBoardSectionMessageBoardThreadsPage(groupId, categoryId, sorts, filter, tag, queryDefinition);
+	}
+
+	@Override
 	public List<MBThread> getPriorityThreads(long categoryId, double priority)
 		throws PortalException {
 
@@ -497,6 +503,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		return mbThreadPersistence.countByG_C_S(groupId, categoryId, status);
 	}
+
+
 
 	@Override
 	public boolean hasAnswerMessage(long threadId) {
@@ -1179,6 +1187,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			moveChildrenMessages(message, category, oldThreadId);
 		}
+	}
+
+	@Override
+	public List<MBThread> getMessageBoardSectionMessageBoardThreadsPage(
+		long groupId, long categoryId, Sort[] sorts, Filter filter, String tag, QueryDefinition<MBThread> queryDefinition) {
+		return mbThreadFinder.findMessageBoardSectionMessageBoardThreadsPage(groupId, categoryId, sorts, filter, tag, queryDefinition);
 	}
 
 	@Reference

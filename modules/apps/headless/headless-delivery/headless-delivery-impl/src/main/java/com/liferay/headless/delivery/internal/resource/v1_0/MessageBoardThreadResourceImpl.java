@@ -92,6 +92,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -220,6 +221,47 @@ public class MessageBoardThreadResourceImpl
 			},
 			mbCategory.getGroupId(), aggregation, filter, search, pagination,
 			sorts);
+	}
+
+	@Override
+	public Page<MessageBoardThread>
+		getMessageBoardSectionCustomFinderPage(
+			Long messageBoardSectionId, String search, String tag,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+			throws Exception {
+
+			MBCategory mbCategory = _mbCategoryService.getCategory(
+				messageBoardSectionId);
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			return Page.of(
+				TransformUtil.transform(
+					_mbThreadService.getMessageBoardSectionMessageBoardThreadsPage(
+						mbCategory.getGroupId(),
+						messageBoardSectionId,
+						sorts,
+						filter,
+						tag,
+						new QueryDefinition<>(
+							status, contextUser.getUserId(), true,
+							pagination.getStartPosition(),
+							pagination.getEndPosition(),
+							new ThreadCreateDateComparator())
+					),
+					this::_toMessageBoardThread),
+				pagination,
+				_mbThreadService.getSectionThreadsCount(mbCategory.getGroupId(),
+					messageBoardSectionId,
+					sorts,
+					filter,
+					tag,
+					new QueryDefinition<>(
+						status, contextUser.getUserId(), true,
+						pagination.getStartPosition(),
+						pagination.getEndPosition(),
+						new ThreadCreateDateComparator())));
 	}
 
 	@Override

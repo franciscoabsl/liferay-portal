@@ -487,6 +487,20 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread>
+		getMessageBoardSectionMessageBoardThreadsPage(
+			long groupId, long categoryId,
+			com.liferay.portal.kernel.search.Sort[] sorts,
+			com.liferay.portal.kernel.search.filter.Filter filter, String tag,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<MBThread>
+				queryDefinition) {
+
+		return _mbThreadLocalService.
+			getMessageBoardSectionMessageBoardThreadsPage(
+				groupId, categoryId, sorts, filter, tag, queryDefinition);
+	}
+
+	@Override
 	public int getMessageCount(long threadId, int status) {
 		return _mbThreadLocalService.getMessageCount(threadId, status);
 	}
@@ -527,6 +541,18 @@ public class MBThreadLocalServiceWrapper
 
 		return _mbThreadLocalService.getPriorityThreads(
 			categoryId, priority, inherit);
+	}
+
+	@Override
+	public int getSectionThreadsCount(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.search.Sort[] sorts,
+		com.liferay.portal.kernel.search.filter.Filter filter, String tag,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<MBThread>
+			queryDefinition) {
+
+		return _mbThreadLocalService.getSectionThreadsCount(
+			groupId, categoryId, sorts, filter, tag, queryDefinition);
 	}
 
 	@Override

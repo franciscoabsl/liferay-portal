@@ -76,6 +76,12 @@ public interface MessageBoardThreadResource {
 			Long messageBoardSectionId, String callbackURL, Object object)
 		throws Exception;
 
+	public Page<MessageBoardThread> getMessageBoardSectionCustomFinderPage(
+			Long messageBoardSectionId, String search, String tag,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			Date dateCreated, Date dateModified, Long messageBoardSectionId,
 			Pagination pagination, Sort[] sorts)

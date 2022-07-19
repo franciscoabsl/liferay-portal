@@ -15,10 +15,13 @@
 package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Date;
 
@@ -55,9 +58,21 @@ public class MBThreadModelDocumentContributor
 
 		document.addKeyword(
 			"participantUserIds", mbThread.getParticipantUserIds());
+
+		document.addKeyword("viewCount", mbThread.getViewCount());
+		document.addKeyword("totalScore", _ratingsStatsLocalService.fetchStats(MBMessage.class.getName(), mbThread.getRootMessageId()).getTotalScore());
+		document.addKeyword("hasValidAnswer", _mbThreadLocalService.hasAnswerMessage(mbThread.getThreadId()));
+		document.addKeyword("numberOfMessageBoardMessages", _mbThreadLocalService.getMessageCount(mbThread.getThreadId(), 0));
 	}
 
 	@Reference
 	protected MBDiscussionLocalService mbDiscussionLocalService;
+
+	@Reference
+	protected MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
+
 
 }
