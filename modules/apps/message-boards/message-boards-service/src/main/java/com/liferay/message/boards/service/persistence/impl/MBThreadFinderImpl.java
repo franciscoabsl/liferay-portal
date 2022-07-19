@@ -1261,7 +1261,7 @@ public class MBThreadFinderImpl
 		return _customSQL.appendCriteria(sql, "AND (MBThread.status = ?)");
 	}
 
-	protected String _addFilterToSQL(Filter filter, String sql) {
+	private String _addFilterToSQL(Filter filter, String sql) {
 		if (filter != null) {
 			String sqlFilter = filter.toString();
 
@@ -1303,7 +1303,9 @@ public class MBThreadFinderImpl
 
 				if (fieldName.equals("modified")) {
 					fieldName = "modifiedDate";
-				} else if (!fieldName.equals("totalScore") && !fieldName.equals("viewCount")) {
+				}
+
+				if (!fieldName.equals("totalScore") && !fieldName.equals("viewCount")) {
 					sql = StringUtil.removeSubstring(
 						sql, "INNER JOIN ?");
 				}
@@ -1355,6 +1357,9 @@ public class MBThreadFinderImpl
 						"MBThread." + fieldName + " ASC");
 				}
 			}
+		} else {
+			sql = StringUtil.removeSubstring(
+				sql, "INNER JOIN ?");
 		}
 		return sql;
 	}
